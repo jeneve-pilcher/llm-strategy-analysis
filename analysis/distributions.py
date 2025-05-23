@@ -11,8 +11,6 @@ product = load(path / 'product')
 business = load(path / 'business')
 
 
-
-
 product_dist = {}
 for model, df in product.items():
     data = df.iloc[0:,1:].to_numpy()
