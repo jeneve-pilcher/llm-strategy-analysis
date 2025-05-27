@@ -4,6 +4,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import seaborn as sns
 import scipy.stats as stats
+from scipy.stats import f_oneway
 
 path = Path(__file__).resolve().parent.parent / 'data' # Go up to repo root then down to data folder
 
@@ -19,25 +20,41 @@ business_dist = {}
 for model, df in business.items():
     data = df.iloc[0:,1:]
     business_dist[model]=data
-    stats.probplot(data.values.flatten(), dist="norm", plot=plt)
-    plt.title(f"Q-Q Plot: Normality Check for {model}")
-    plt.grid(True)
-    plt.savefig(f"./results/bus/distributions/is-normal/QQ/{model}.png")
-    plt.show()
 
-    sns.histplot(data.values.flatten(), kde=True)
-    plt.title(f"Histogram with KDE for {model}")
-    plt.savefig(f"./results/bus/distributions/is-normal/KDE/{model}.png")
-    plt.show()
 
-sns.kdeplot(business_dist['claude'].values.flatten(), label='Claude')
-sns.kdeplot(business_dist['gpt'].values.flatten(), label='GPT')
-sns.kdeplot(business_dist['deepseek'].values.flatten(), label='Deepseek')
-sns.kdeplot(business_dist['gemini'].values.flatten(), label='Gemini')
-plt.legend()
-plt.title("Ranked Effectiveness of Business Strategies Created by LLMs")
-plt.savefig(f"./results/bus/distributions/dub.png")
-plt.show()
+
+# stat, p = f_oneway(business_dist["gpt"], business_dist["deepseek"], business_dist["claude"], business_dist["gemini"])
+# print(f"ANOVA: p = {p}")
+
+pvals = np.array([2.86862245e-02, 2.10708689e-02, 9.73643134e-01, 3.21571280e-04,
+                  6.08766871e-02, 8.07468282e-04, 8.09245873e-02, 1.86626146e-02,
+                  2.99908149e-03, 5.20798018e-01])
+
+corrected_alpha = 0.05 / len(pvals)
+significant = pvals < corrected_alpha
+
+print("Corrected alpha:", corrected_alpha)
+print("Significant tests:", significant)
+
+#     stats.probplot(data.values.flatten(), dist="norm", plot=plt)
+#     plt.title(f"Q-Q Plot: Normality Check for {model}")
+#     plt.grid(True)
+#     plt.savefig(f"./results/bus/distributions/is-normal/QQ/{model}.png")
+#     plt.show()
+
+#     sns.histplot(data.values.flatten(), kde=True)
+#     plt.title(f"Histogram with KDE for {model}")
+#     plt.savefig(f"./results/bus/distributions/is-normal/KDE/{model}.png")
+#     plt.show()
+
+# sns.kdeplot(business_dist['claude'].values.flatten(), label='Claude')
+# sns.kdeplot(business_dist['gpt'].values.flatten(), label='GPT')
+# sns.kdeplot(business_dist['deepseek'].values.flatten(), label='Deepseek')
+# sns.kdeplot(business_dist['gemini'].values.flatten(), label='Gemini')
+# plt.legend()
+# plt.title("Ranked Effectiveness of Business Strategies Created by LLMs")
+# plt.savefig(f"./results/bus/distributions/dub.png")
+# plt.show()
 
 #{model:(mean,std)}
 # product_plot = {}
