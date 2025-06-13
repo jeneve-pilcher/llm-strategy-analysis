@@ -12,7 +12,13 @@ dependencies = [
     "pandas",
     "matplotlib",
     "seaborn",
-    "scipy"
+    "scipy",
+    "pyyaml",
+    "langchain",
+    "langchain-openai",
+    "langchain-anthropic",
+    "langchain-google-genai",
+    "langchain-deepseek"
 ]
 
 [project.scripts]
