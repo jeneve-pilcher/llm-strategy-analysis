@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 #from scipy.stats import f_oneway
 #from statsmodels.stats.multicomp import pairwise_tukeyhsd
-from .distributions import product_dict
+from .distributions import DistributionDataLoader
 
 def main():
 
@@ -45,6 +45,11 @@ def main():
     # plt.show()
 
     # --------------- Plot 2: KDE + Mean/Std Overlay ---------------
+    
+    ## Load data
+    data_loader = DistributionDataLoader()
+    product_dict, business_dict = data_loader.load()
+    
     plt.figure(figsize=(10, 6))
 
     palette = sns.color_palette("tab10", len(product_dict))
