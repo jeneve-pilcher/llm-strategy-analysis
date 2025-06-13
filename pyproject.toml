@@ -16,7 +16,7 @@ dependencies = [
 ]
 
 [project.scripts]
-finalrun = "llmstrategy.finalrun:main"
+analyze = "llmstrategy.analyze:main"
 
 [build-system]
 requires = ["hatchling"]
