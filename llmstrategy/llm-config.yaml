@@ -1,0 +1,8 @@
+gpt-4:
+  api_key: "sk-..."
+claude-sonnet:
+  api_key: "sk-ant-..."
+gemini-2.5-flash:
+  api_key: "AIza..."
+deepseek-v3:
+  api_key: "ds-..."
